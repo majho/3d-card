@@ -1,0 +1,124 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 100%;
+    font-family: sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    perspective: 1000px;
+    perspective-origin: calc(var(--px, 0.5) * 100%) calc(var(--py, 0.5) * 100%);
+}
+
+figure {
+    margin: 0;
+}
+
+.wrapper {
+    --gap: min(2em, 3vw);
+
+    box-sizing: content-box;
+    padding: var(--gap);
+    max-width: 86em;
+    display: grid;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--gap);
+}
+
+.item {
+    --rotate: 12deg;
+    --radius: 14px;
+
+    width: clamp(10em, 47%, 20em);
+    will-change: transform;
+    position: relative;
+    display: grid;
+    grid-template-areas: 'content';
+    transition: transform 250ms cubic-bezier(0.215, 0.610, 0.355, 1);
+    transform: 
+        translateZ(var(--tz, 0))
+        translateX(calc(20% * var(--mx, 0)))
+        translateY(calc(15% * var(--my, 0)))
+        rotateY(calc(var(--rotate) * var(--mx, 0)))
+        rotateX(calc(var(--rotate) * var(--my, 0) * -1));
+}
+
+.item:hover {
+    --tz: 2em;
+
+    z-index: 1;
+}
+
+/* shdow */
+.item::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius);
+    background-color: rgba(0, 0, 0, 0.33);
+    filter: blur(1em);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: inherit;
+    transform: 
+        scale(0.9)
+        translateX(calc(20% * var(--mx, 0) * -1))
+        translateY(calc(15% * var(--my, 0) * -1))
+}
+
+.item > * {
+    grid-area: content;
+}
+
+.item__img {
+    display: block;
+    border-radius: var(--radius);
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.item__caption {
+    padding: 3em 1em 1em;
+    color: white;
+    background-image: linear-gradient(transparent, rgba(0,0,0,0.5));
+    font-size: 1.4em;
+    font-weight: 700;
+    position: relative;
+    overflow: hidden;
+    border-bottom-left-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+    display: flex;
+    align-self: end;
+}
+
+.item__caption > * {
+    min-width: 0.5ch;
+    flex-shrink: 0;
+    transition-duration: 360ms;
+    transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1);
+    transition-delay: calc(var(--i, 0) * 10ms);
+    transform: translateY(3em);
+    will-change: transform, opacity;
+    perspective: 1px;
+    opacity: 0;
+}
+
+.item:hover .item__caption > * {
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: translateY(0);
+    opacity: 1;
+}
