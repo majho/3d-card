@@ -41,6 +41,7 @@ figure {
     --radius: 14px;
 
     width: clamp(10em, 47%, 20em);
+    aspect-ratio: 320 / 480;
     will-change: transform;
     position: relative;
     display: grid;
@@ -86,6 +87,7 @@ figure {
 .item__img {
     display: block;
     border-radius: var(--radius);
+    background-color: #ccc;
     object-fit: cover;
     width: 100%;
     height: 100%;
