@@ -105,6 +105,7 @@ figure {
     border-bottom-right-radius: var(--radius);
     display: flex;
     align-self: end;
+    pointer-events: none;
 }
 
 .item__caption > * {
